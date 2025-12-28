@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game - Debug Test</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Debug styles */
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 9999;
+        }
+        .card {
+            border: 1px solid red !important; /* Debug border */
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-info" id="debugInfo">
+        Loading...
+    </div>
+
+    <div class="container">
+        <header class="game-header">
+            <h1 class="game-title">
+                <span class="title-icon">🧠</span>
+                Memory Master - DEBUG
+            </h1>
+            <button type="button" class="theme-toggle" id="themeToggle">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </header>
+
+        <section class="game-controls">
+            <div class="control-group">
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty" class="difficulty-select">
+                    <option value="easy">Easy (8 cards)</option>
+                    <option value="medium" selected>Medium (16 cards)</option>
+                    <option value="hard">Hard (24 cards)</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <button type="button" class="btn btn-primary" id="soundToggle">
+                    <span id="soundIcon">🔊</span> Sound
+                </button>
+            </div>
+            <div class="control-group">
+                <button type="button" class="btn btn-secondary" id="newGame">
+                    <span>🔄</span> New Game
+                </button>
+            </div>
+        </section>
+
+        <section class="score-panel">
+            <div class="stat-item">
+                <span class="stat-label">Stars</span>
+                <div class="stars" id="stars">
+                    <span class="star active">⭐</span>
+                    <span class="star active">⭐</span>
+                    <span class="star active">⭐</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Moves</span>
+                <div class="stat-value" id="moves">0</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Time</span>
+                <div class="stat-value" id="timer">00:00</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Best Time</span>
+                <div class="stat-value" id="bestTime">--:--</div>
+            </div>
+        </section>
+
+        <main class="game-board medium" id="gameBoard">
+            <!-- Cards will be generated -->
+        </main>
+
+        <section class="statistics">
+            <h2>Your Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalGames">0</div>
+                    <div class="stat-description">Games Played</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalWins">0</div>
+                    <div class="stat-description">Games Won</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="winRate">0%</div>
+                    <div class="stat-description">Win Rate</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Simple debug script
+        const debugInfo = document.getElementById('debugInfo');
+        const gameBoard = document.getElementById('gameBoard');
+
+        function updateDebug() {
+            const boardRect = gameBoard.getBoundingClientRect();
+            const computedStyle = window.getComputedStyle(gameBoard);
+            debugInfo.innerHTML = `
+                Board Class: ${gameBoard.className}<br>
+                Width: ${boardRect.width.toFixed(0)}px<br>
+                Height: ${boardRect.height.toFixed(0)}px<br>
+                Grid Columns: ${computedStyle.gridTemplateColumns}<br>
+                Grid Rows: ${computedStyle.gridTemplateRows}<br>
+                Gap: ${computedStyle.gap}<br>
+                Cards: ${gameBoard.children.length}
+            `;
+        }
+
+        // Create test cards
+        function createTestCards(count) {
+            gameBoard.innerHTML = '';
+            const symbols = ['🎮', '🎯', '🎨', '🎭', '🎪', '🎸', '🎹', '🎺', '🎻', '🎬', '🎤', '🎧'];
+
+            for (let i = 0; i < count; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-face card-back"></div>
+                        <div class="card-face card-front">${symbols[i % symbols.length]}</div>
+                    </div>
+                `;
+                gameBoard.appendChild(card);
+            }
+            updateDebug();
+        }
+
+        // Difficulty selector
+        document.getElementById('difficulty').addEventListener('change', function(e) {
+            const difficulty = e.target.value;
+            gameBoard.className = `game-board ${difficulty}`;
+
+            let cardCount;
+            switch(difficulty) {
+                case 'easy': cardCount = 8; break;
+                case 'medium': cardCount = 16; break;
+                case 'hard': cardCount = 24; break;
+            }
+
+            createTestCards(cardCount);
+        });
+
+        // New game button
+        document.getElementById('newGame').addEventListener('click', function() {
+            const difficulty = document.getElementById('difficulty').value;
+            let cardCount;
+            switch(difficulty) {
+                case 'easy': cardCount = 8; break;
+                case 'medium': cardCount = 16; break;
+                case 'hard': cardCount = 24; break;
+            }
+            createTestCards(cardCount);
+        });
+
+        // Initialize with medium difficulty
+        createTestCards(16);
+
+        // Update on resize
+        window.addEventListener('resize', updateDebug);
+    </script>
+</body>
+</html>

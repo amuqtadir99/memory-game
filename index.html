@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Abdul Muqtadir">
+    <meta name="description" content="Memory Master - A fun and engaging card matching game to test and improve your memory skills. Match pairs of cards and achieve the best time!">
+    <title>Memory Master - Card Matching Game</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="logo">
+                <span class="brain-icon">🧠</span>
+                <h1>Memory Master</h1>
+            </div>
+
+            <div class="header-controls">
+                <button type="button" class="icon-btn" id="soundBtn" title="Toggle Sound">
+                    <span class="icon">🔊</span>
+                </button>
+                <button type="button" class="icon-btn" id="themeBtn" title="Toggle Theme">
+                    <span class="icon">🌙</span>
+                </button>
+                <button type="button" class="primary-btn" id="newGameBtn">
+                    <span class="icon">🔄</span> New Game
+                </button>
+            </div>
+        </header>
+
+        <!-- Game Controls -->
+        <div class="game-controls">
+            <div class="control-item">
+                <label for="difficulty">Difficulty Level</label>
+                <select id="difficulty" class="select-input">
+                    <option value="easy">Easy (8 cards)</option>
+                    <option value="medium" selected>Medium (16 cards)</option>
+                    <option value="hard">Hard (24 cards)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-box">
+                <div class="stat-label">Stars</div>
+                <div class="stat-value stars" id="starsDisplay">
+                    <span class="star active">⭐</span>
+                    <span class="star active">⭐</span>
+                    <span class="star active">⭐</span>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-label">Moves</div>
+                <div class="stat-value" id="movesDisplay">0</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-label">Time</div>
+                <div class="stat-value" id="timeDisplay">00:00</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-label">Best Time</div>
+                <div class="stat-value" id="bestTimeDisplay">--:--</div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <main class="game-container">
+            <div class="game-board" id="gameBoard">
+                <!-- Cards will be generated here -->
+            </div>
+        </main>
+
+        <!-- Statistics Section -->
+        <section class="statistics-section">
+            <h2>Your Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="gamesPlayed">0</div>
+                    <div class="stat-desc">Games Played</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="gamesWon">0</div>
+                    <div class="stat-desc">Games Won</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="winRate">0%</div>
+                    <div class="stat-desc">Win Rate</div>
+                </div>
+            </div>
+
+            <footer class="developer-credit">
+                <p>Created by <strong>Abdul Muqtadir</strong> @witwebsolutions | <a href="https://www.witweb.com.au" target="_blank">www.witweb.com.au</a></p>
+                <div class="social-links">
+                    <a href="https://github.com/amuqtadir99" target="_blank" title="GitHub">GitHub</a>
+                    <a href="https://www.linkedin.com/in/amuqtadir1/" target="_blank" title="LinkedIn">LinkedIn</a>
+                </div>
+            </footer>
+
+        </section>
+
+        <!-- Victory Modal -->
+        <div class="modal" id="victoryModal">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🎉 Congratulations! 🎉</h2>
+                </div>
+                <div class="modal-body">
+                    <p class="victory-text">You've successfully matched all cards!</p>
+
+                    <div class="victory-stats">
+                        <div class="victory-stat">
+                            <span class="label">Time</span>
+                            <span class="value" id="victoryTime">00:00</span>
+                        </div>
+                        <div class="victory-stat">
+                            <span class="label">Moves</span>
+                            <span class="value" id="victoryMoves">0</span>
+                        </div>
+                        <div class="victory-stat">
+                            <span class="label">Rating</span>
+                            <span class="value" id="victoryStars"></span>
+                        </div>
+                    </div>
+
+                    <div class="new-record" id="newRecordBadge" style="display: none;">
+                        <span class="badge">🏆 New Best Time! 🏆</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="primary-btn large" id="playAgainBtn">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
